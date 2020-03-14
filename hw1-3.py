@@ -42,12 +42,12 @@ def computeMatrix(f1, f2, match, p_replace, p_indel):
                 val, parent = max((a[i][j-1].val+p_indel, a[i-1][j].val+p_indel, a[i-1][j-1].val+cond))
                 # print('element is', val, f1[i-1], f2[j-1], i, j)
                 # print('parent is ', parent)
-                if(val >= 0):
-                    a[i][j] = Node(val, parent)
-                    b[i][j] = val
-                else:
-                    a[i][j] = Node(0, parent)
-                    b[i][j] = 0
+                #if(val >= 0):
+                a[i][j] = Node(val, parent)
+                b[i][j] = val
+                #else:
+                    #a[i][j] = Node(0, parent)
+                    #b[i][j] = 0
             # else:
     #             print('element is', a[i][j].val, a[i][j].parent, i, j)
     # print('return\n')
