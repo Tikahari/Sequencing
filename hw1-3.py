@@ -42,12 +42,16 @@ def computeMatrix(f1, f2, match, p_replace, p_indel):
                 val, parent = max((a[i][j-1].val+p_indel, a[i-1][j].val+p_indel, a[i-1][j-1].val+cond))
                 # print('element is', val, f1[i-1], f2[j-1], i, j)
                 # print('parent is ', parent)
-                a[i][j] = Node(val, parent)
-                b[i][j] = val
+                if(val >= 0):
+                    a[i][j] = Node(val, parent)
+                    b[i][j] = val
+                else:
+                    a[i][j] = Node(0, parent)
+                    b[i][j] = 0
             # else:
     #             print('element is', a[i][j].val, a[i][j].parent, i, j)
     # print('return\n')
-    # print(b)
+    print(b)
     # print(f1)
     # print(f2)
     return a,b
@@ -72,7 +76,7 @@ def getPath(v, ij, a, f1, f2):
     l = len(path)
     while(path[-1][0] > 0 and path[-1][1] > 0):
         # print('path[-1] is', path[-1])
-        if(a[path[-1][0]][path[-1][1]].parent[0] is not -1):
+        if(a[path[-1][0]][path[-1][1]].parent[0] is not -999):
             # print('parent', a[path[-1][0]][path[-1][1]].parent[0])
             if(2 in a[path[-1][0]][path[-1][1]].parent[0]):
                 # print(2)
@@ -84,7 +88,7 @@ def getPath(v, ij, a, f1, f2):
                 # print(1)
                 path.append((path[-1][0]-1, path[-1][1]))
             # break
-        elif( a[path[-1][0]][path[-1][1]].parent[0] is -1):
+        elif( a[path[-1][0]][path[-1][1]].parent[0] is -999):
             # print('no parents')
             sys.exit()
         # else:
@@ -95,7 +99,7 @@ def convert(path, f1, f2):
     (f2, f1) = sorted((f1, f2))
     print(f1)
     print(f2)
-    print('path is', path)
+    print('path is', path, path[-1])
     # will keep track of where we are in path
     p = 0
     seq = ""
@@ -103,21 +107,21 @@ def convert(path, f1, f2):
     i = 0
     j = 0
     while j < (len(f2)) and p < len(path) and path[p][0] < len(f1):
-        print('i', i, len(f1),'j', j, len(f2),'p', p, len(path), path[p][0])
+        #print('i', i, len(f1),'j', j, len(f2),'p', p, len(path), path[p][0])
         if j < path[0][1]:
             seq += f2[j]
-            print('before', seq)
+            #print('before', seq)
             j+= 1
         else:
             seq += f1[path[p][0]]
-            print('during', seq, p, path[p][0],path, f1[path[p][0]])
+            #print('during', seq, p, path[p][0],path, f1[path[p][0]])
             j = path[p][1]
             p +=1
-    print('after', path[p-1][0], f1)
+    #print('after', path[p-1][0], f1)
     i = path[p-1][0]
     while i < len(f1):
         seq += f1[i]
-        print('after', seq)
+        #print('after', seq)
         i += 1
     return seq
 
@@ -132,7 +136,7 @@ def sequenceAssembler(input, match, p_replace, p_indel, output):
     while line:
         if count % 2 == 0:
             lines.append(line)
-            print(line)
+            #print(line)
         count += 1
         line = f.readline().strip()
     # align each member of lines to every other member of lines
@@ -150,7 +154,7 @@ def sequenceAssembler(input, match, p_replace, p_indel, output):
             # print(lines[i+1])
             # print('aligning', i, i+1)
             newseq = convert(path[::-1], lines[i], lines[i+1])
-            print(i, lines[i], lines[i+1],'newseq is ', newseq)
+            #print(i, lines[i], lines[i+1],'newseq is ', newseq)
             o = open(output, "a+")
             o.write('>Sequence'+str(seq)+'\n'+newseq+'\n')
             o.close()
@@ -161,11 +165,11 @@ def sequenceAssembler(input, match, p_replace, p_indel, output):
             lines[0] = newseq
             i = 0
             # print("length of lines now", len(lines))
-            print(lines)
+            # print(lines)
             seq +=1
         else:
-            print(i, 'alignment score too low', lines[i], lines[i+1], v)
-            print(lines)
+            #print(i, 'alignment score too low', lines[i], lines[i+1], v)
+            #print(lines)
             i += 1
     print("alignments", lines)
     # m = [][]

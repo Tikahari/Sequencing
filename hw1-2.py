@@ -27,7 +27,7 @@ def sequencePartitioner(input, x, y, output):
                     seq += line[i:i+rn].strip()
                     o.write(seq)
                 # if not, check if a fragment of size greater than 'x' exists
-                elif len(line) - i >= int(x):
+                elif len(line) - i - rn >= int(x):
                     seq += line[i:len(line)-1].strip()
                     o.write(seq)
                     # print("ONLY X",len(line), i, len(line)-i, x, seq, len(line[i:len(line)-1]))
