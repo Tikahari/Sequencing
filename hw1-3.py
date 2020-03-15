@@ -101,11 +101,39 @@ def convert(path, f1, f2):
     print(f2)
     print('path is', path, path[-1])
     # will keep track of where we are in path
-    p = 0
+    #p = 0
     seq = ""
-    series = False
+    #series = False
     i = 0
     j = 0
+        # find which string is the end
+    if path[0][0]==0:
+        end =f2
+        beg = f1
+        stop=path[0][1]
+    elif path[0][1]==0:
+        end = f1
+        beg = f2
+        stop=path[0][0]
+    print("new")
+    print(beg)
+    print(end)
+    print("Stop")
+    print(stop)
+    # essentially finding where the dovetail is, what goes first, then goes to the other string after u reach stop
+
+    for i in range(0, stop): 
+        seq+=beg[i]
+        print(beg[i])
+    print("test in here")
+    print(beg[stop])
+    print("end")
+    for j in range(0, len(end)):
+        seq+=end[j]
+        print(end[j])
+        
+    
+    """
     while j < (len(f2)) and p < len(path) and path[p][0] < len(f1):
         #print('i', i, len(f1),'j', j, len(f2),'p', p, len(path), path[p][0])
         if j < path[0][1]:
@@ -122,7 +150,7 @@ def convert(path, f1, f2):
     while i < len(f1):
         seq += f1[i]
         #print('after', seq)
-        i += 1
+        i += 1 """
     return seq
 
 def sequenceAssembler(input, match, p_replace, p_indel, output):
