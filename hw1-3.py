@@ -101,11 +101,40 @@ def convert(path, f1, f2):
     print(f2)
     print('path is', path, path[-1])
     # will keep track of where we are in path
-    p = 0
+    #p = 0
     seq = ""
-    series = False
+    #series = False
     i = 0
     j = 0
+        # find which string is the end
+    if path[0][0]==0:
+        end =f2
+        beg = f1
+        stop=path[0][1]
+    elif path[0][1]==0:
+        end = f1
+        beg = f2
+        stop=path[0][0]
+    print("new")
+    print(beg)
+    print(end)
+    print("Stop")
+    print(stop)
+    # essentially finding where the dovetail is, what goes first, then goes to the other string after u reach stop
+
+    for i in range(0, stop): 
+        if(i>stop):
+            seq+=beg[i]
+        # print(beg[i])
+    # print("test in here")
+    # print(beg[stop])
+    # print("end")
+    for j in range(0, len(end)):
+        seq+=end[j]
+        # print(end[j])
+    print("Seq is "+ seq) 
+    
+    """
     while j < (len(f2)) and p < len(path) and path[p][0] < len(f1):
         #print('i', i, len(f1),'j', j, len(f2),'p', p, len(path), path[p][0])
         if j < path[0][1]:
@@ -122,7 +151,7 @@ def convert(path, f1, f2):
     while i < len(f1):
         seq += f1[i]
         #print('after', seq)
-        i += 1
+        i += 1 """
     return seq
 
 def sequenceAssembler(input, match, p_replace, p_indel, output):
@@ -141,6 +170,8 @@ def sequenceAssembler(input, match, p_replace, p_indel, output):
         line = f.readline().strip()
     # align each member of lines to every other member of lines
     i = 0
+    o = open(output, "a+")
+    newseq = ""
     while i < len(lines)-1:
         a,b = computeMatrix(lines[i], lines[i+1], match, p_replace,p_indel)
         # find largest alignment score
@@ -148,16 +179,11 @@ def sequenceAssembler(input, match, p_replace, p_indel, output):
         # print('v, ij', v, ij)
         if v > 0:
             path = getPath(v, ij, a, lines[i], lines[i+1])
-            # print(b)
-            # print(path)
-            # print(lines[i])
-            # print(lines[i+1])
-            # print('aligning', i, i+1)
             newseq = convert(path[::-1], lines[i], lines[i+1])
-            #print(i, lines[i], lines[i+1],'newseq is ', newseq)
-            o = open(output, "a+")
-            o.write('>Sequence'+str(seq)+'\n'+newseq+'\n')
-            o.close()
+            # stg = str(seq)
+            # lenstr = len(seq)
+            # o.write('>Sequence'+str(seq)+'\n'+newseq+'\n')
+            # o.close()
             # remove two original sequences from 'lines' and replace with 'newseq'
             # print('length of lines', len(lines))
             lines.pop(i+1)
@@ -171,6 +197,8 @@ def sequenceAssembler(input, match, p_replace, p_indel, output):
             #print(i, 'alignment score too low', lines[i], lines[i+1], v)
             #print(lines)
             i += 1
+    o.write('>Sequence'+str(seq)+'\n'+newseq+'\n')
+    o.close()
     print("alignments", lines)
     # m = [][]
     f.close()
