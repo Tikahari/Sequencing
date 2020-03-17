@@ -121,19 +121,19 @@ def convert(path, f1, f2):
     print("Stop")
     print(stop)
     # essentially finding where the dovetail is, what goes first, then goes to the other string after u reach stop
-
-    for i in range(0, stop): 
-        if(i>stop):
+    if(stop<len(beg) and stop<len(end)):
+        for i in range(0, stop): 
+            #if(i<stop):
             seq+=beg[i]
-        # print(beg[i])
+            # print(beg[i])
     # print("test in here")
     # print(beg[stop])
     # print("end")
-    for j in range(0, len(end)):
-        seq+=end[j]
-        # print(end[j])
-    print("Seq is "+ seq) 
-    
+        for j in range(0, len(end)):
+            seq+=end[j]
+            # print(end[j])
+        print("Seq is "+ seq) 
+    """
     while j < (len(f2)) and p < len(path) and path[p][0] < len(f1):
         #print('i', i, len(f1),'j', j, len(f2),'p', p, len(path), path[p][0])
         if j < path[0][1]:
@@ -147,10 +147,12 @@ def convert(path, f1, f2):
             p +=1
     #print('after', path[p-1][0], f1)
     i = path[p-1][0]
+    
     while i < len(f1):
         seq += f1[i]
         #print('after', seq)
         i += 1 
+    """
     return seq
 
 def sequenceAssembler(input, match, p_replace, p_indel, output):
@@ -199,6 +201,7 @@ def sequenceAssembler(input, match, p_replace, p_indel, output):
     o.write('>Sequence'+str(0)+'\n'+newseq+'\n')
     o.close()
     print("alignments", lines)
+    print("size", len(newseq))
     # m = [][]
     f.close()
     # o.close()
