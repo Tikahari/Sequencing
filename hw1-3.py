@@ -196,7 +196,7 @@ def sequenceAssembler(input, match, p_replace, p_indel, output):
             #print(i, 'alignment score too low', lines[i], lines[i+1], v)
             #print(lines)
             i += 1
-    o.write('>Sequence'+str(seq)+'\n'+newseq+'\n')
+    o.write('>Sequence'+str(0)+'\n'+newseq+'\n')
     o.close()
     print("alignments", lines)
     # m = [][]
