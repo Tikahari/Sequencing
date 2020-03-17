@@ -7,7 +7,7 @@ class Node:
         self.parent = list()
         self.parent.append(parent)
 
-def max(list):
+def max_1(list):
     # print('list is', list)
     m = -999
     indices = []
@@ -39,7 +39,7 @@ def computeMatrix(f1, f2, match, p_replace, p_indel):
                     # print('replace', i, j, f1[i-1], f2[j-1])
                     cond = p_replace
                     # print(a[i][j-1].val+p_indel, a[i-1][j].val+p_indel, a[i-1][j-1].val+cond)
-                val, parent = max((a[i][j-1].val+p_indel, a[i-1][j].val+p_indel, a[i-1][j-1].val+cond))
+                val, parent = max_1((a[i][j-1].val+p_indel, a[i-1][j].val+p_indel, a[i-1][j-1].val+cond))
                 # print('element is', val, f1[i-1], f2[j-1], i, j)
                 # print('parent is ', parent)
                 #if(val >= 0):
@@ -198,7 +198,13 @@ def sequenceAssembler(input, match, p_replace, p_indel, output):
             #print(i, 'alignment score too low', lines[i], lines[i+1], v)
             #print(lines)
             i += 1
-    o.write('>Sequence'+str(0)+'\n'+newseq+'\n')
+    # get max sequence
+    m = ""
+    for i in lines:
+        if len(i) > len(m):
+            m = i
+    print(m)
+    o.write('>Sequence'+str(0)+'\n'+m+'\n')
     o.close()
     print("alignments", lines)
     print("size", len(newseq))
