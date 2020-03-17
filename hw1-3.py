@@ -101,7 +101,7 @@ def convert(path, f1, f2):
     print(f2)
     print('path is', path, path[-1])
     # will keep track of where we are in path
-    #p = 0
+    p = 0
     seq = ""
     #series = False
     i = 0
@@ -134,7 +134,6 @@ def convert(path, f1, f2):
         # print(end[j])
     print("Seq is "+ seq) 
     
-    """
     while j < (len(f2)) and p < len(path) and path[p][0] < len(f1):
         #print('i', i, len(f1),'j', j, len(f2),'p', p, len(path), path[p][0])
         if j < path[0][1]:
@@ -151,7 +150,7 @@ def convert(path, f1, f2):
     while i < len(f1):
         seq += f1[i]
         #print('after', seq)
-        i += 1 """
+        i += 1 
     return seq
 
 def sequenceAssembler(input, match, p_replace, p_indel, output):
