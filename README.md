@@ -1,6 +1,6 @@
 # Sequence Simulator
 ###### Contributors: Zahin Ibnat, Tikahari Khanal, Hannah Mathew
-##### Dependencies
+#### Dependencies
 * python>=3.7.6
 * openjdk version "11.0.6" 2020-01-14
 
