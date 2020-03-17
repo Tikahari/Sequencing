@@ -30,5 +30,5 @@ This program aligns each a set of fragments in a fasta file using a greedy algor
 <br/>
 The above algorithm is repeated until the list contains a single fragment or the highest alignment score between fragments is 0.
 <br/>
-
+<br/>
 >Note: All outputs are formatted according to the standard fasta format (http://genetics.bwh.harvard.edu/pph/FASTA.html).
