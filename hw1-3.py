@@ -132,7 +132,15 @@ def convert(path, f1, f2):
         for j in range(0, len(end)):
             seq+=end[j]
             # print(end[j])
-        print("Seq is "+ seq) 
+    if(seq==""):
+        # find longer string
+        if(len(beg)>len(end)):
+            seq=beg
+        else:
+            seq=end
+        # print("LLLLLLLLLLLLLKLKLL")
+        # print(ll)
+    print("Seq is "+ seq) 
     """
     while j < (len(f2)) and p < len(path) and path[p][0] < len(f1):
         #print('i', i, len(f1),'j', j, len(f2),'p', p, len(path), path[p][0])
