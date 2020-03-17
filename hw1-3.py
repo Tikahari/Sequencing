@@ -199,6 +199,7 @@ def sequenceAssembler(input, match, p_replace, p_indel, output):
     o.write('>Sequence'+str(seq)+'\n'+newseq+'\n')
     o.close()
     print("alignments", lines)
+    print("size", len(lines[0]))
     # m = [][]
     f.close()
     # o.close()
