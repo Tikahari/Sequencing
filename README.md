@@ -29,6 +29,3 @@ This program aligns each a set of fragments in a fasta file using a greedy algor
 - if the alignment score is greater than 0 the fragments are removed and the combined fragment is inserted into the beginning of the list and i and j are set to the two first items in the list
 <br/>
 The above algorithm is repeated until the list contains a single fragment or the highest alignment score between fragments is 0.
-<br/>
-<br/>
->Note: All outputs are formatted according to the standard fasta format (http://genetics.bwh.harvard.edu/pph/FASTA.html).
