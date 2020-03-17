@@ -23,17 +23,6 @@ def max(list):
             # print('parent is now', indices)
     return m, indices
 
-def max1(list):
-    # print('list is', list)
-    m = -999
-    indices = -1
-    for i in range(len(list)):
-        # print('list',list[i], i, list[i] > m, m)
-        if list[i] >= m:
-            # print('append parent',indices)
-            indices = i
-            m = list[i]
-    return m, indices    
 def computeMatrix(f1, f2, match, p_replace, p_indel):
     # print('f1',f1, len(f1))
     # print('f2',f2, len(f2))
@@ -53,16 +42,16 @@ def computeMatrix(f1, f2, match, p_replace, p_indel):
                 val, parent = max((a[i][j-1].val+p_indel, a[i-1][j].val+p_indel, a[i-1][j-1].val+cond))
                 # print('element is', val, f1[i-1], f2[j-1], i, j)
                 # print('parent is ', parent)
-                if(val >= 0):
-                    a[i][j] = Node(val, parent)
-                    b[i][j] = val
-                else:
-                    a[i][j] = Node(0, parent)
-                    b[i][j] = 0
+                #if(val >= 0):
+                a[i][j] = Node(val, parent)
+                b[i][j] = val
+                #else:
+                    #a[i][j] = Node(0, parent)
+                    #b[i][j] = 0
             # else:
     #             print('element is', a[i][j].val, a[i][j].parent, i, j)
     # print('return\n')
-    # print(b)
+    print(b)
     # print(f1)
     # print(f2)
     return a,b
@@ -107,58 +96,69 @@ def getPath(v, ij, a, f1, f2):
     return path
             
 def convert(path, f1, f2):
-    seq_ = [f1, f2]
+    (f2, f1) = sorted((f1, f2))
     print(f1)
     print(f2)
     print('path is', path, path[-1])
     # will keep track of where we are in path
-    p = 0
+    #p = 0
     seq = ""
-    series = False
-    j = 0
-    inc, ind = max1(path[0])
-    print(inc, ind)
-    seq1 = seq_[ind]
-
-    j = 0
-    while j < (len(seq1)):
-        #print('i', i, len(f1),'j', j, len(f2),'p', p, len(path), path[p][0])
-        if j < inc:
-            seq += seq1[j]
-            print('before', seq)
-        j+= 1
-    seq2 = f1
-    for s in seq_:
-        if s is not seq1:
-            seq2 = s
-    print('seq1, seq2', seq1, seq2)
+    #series = False
     i = 0
-    while i < (len(path)-1):
-        if ind == 0:
-            seq += seq2[path[i+1][0]-1]
+    j = 0
+        # find which string is the end
+    if path[0][0]==0:
+        end =f2
+        beg = f1
+        stop=path[0][1]
+    elif path[0][1]==0:
+        end = f1
+        beg = f2
+        stop=path[0][0]
+    print("new")
+    print(beg)
+    print(end)
+    print("Stop")
+    print(stop)
+    # essentially finding where the dovetail is, what goes first, then goes to the other string after u reach stop
+
+    for i in range(0, stop): 
+        if(i>stop):
+            seq+=beg[i]
+        # print(beg[i])
+    # print("test in here")
+    # print(beg[stop])
+    # print("end")
+    for j in range(0, len(end)):
+        seq+=end[j]
+        # print(end[j])
+    print("Seq is "+ seq) 
+    
+    """
+    while j < (len(f2)) and p < len(path) and path[p][0] < len(f1):
+        #print('i', i, len(f1),'j', j, len(f2),'p', p, len(path), path[p][0])
+        if j < path[0][1]:
+            seq += f2[j]
+            #print('before', seq)
+            j+= 1
         else:
-            seq += seq2[path[i+1][1]-1]
-        print('path', seq)
-        i += 1
-        # else:
-        #     seq += f1[path[p][0]]
-        #     #print('during', seq, p, path[p][0],path, f1[path[p][0]])
-        #     j = path[p][1]
-        #     p +=1
+            seq += f1[path[p][0]]
+            #print('during', seq, p, path[p][0],path, f1[path[p][0]])
+            j = path[p][1]
+            p +=1
     #print('after', path[p-1][0], f1)
-    print(i, len(f1))
-    i += 1
+    i = path[p-1][0]
     while i < len(f1):
-        seq += f1[i-1]
-        print('after', seq)
-        i += 1
+        seq += f1[i]
+        #print('after', seq)
+        i += 1 """
     return seq
 
 def sequenceAssembler(input, match, p_replace, p_indel, output):
     f = open(input, "r")
     # o = open(output, "w+")
     seq = 1
-    lines = []
+    lines = list()
     line = f.readline().strip()
     count = 1
     # add all sequences to 'lines' list
@@ -170,25 +170,20 @@ def sequenceAssembler(input, match, p_replace, p_indel, output):
         line = f.readline().strip()
     # align each member of lines to every other member of lines
     i = 0
+    o = open(output, "a+")
+    newseq = ""
     while i < len(lines)-1:
-        print(lines[i], lines[i+1])
         a,b = computeMatrix(lines[i], lines[i+1], match, p_replace,p_indel)
         # find largest alignment score
         v, ij =  findDovetail(a, lines[i], lines[i+1])
         # print('v, ij', v, ij)
         if v > 0:
             path = getPath(v, ij, a, lines[i], lines[i+1])
-            print('\n\n\n\n')
-            print(b)
-            print(path)
-            print('first',lines[i])
-            print('second',lines[i+1])
-            # print('aligning', i, i+1)
             newseq = convert(path[::-1], lines[i], lines[i+1])
-            print(i, lines[i], lines[i+1],'newseq is ', newseq)
-            o = open(output, "a+")
-            o.write('>Sequence'+str(seq)+'\n'+newseq+'\n')
-            o.close()
+            # stg = str(seq)
+            # lenstr = len(seq)
+            # o.write('>Sequence'+str(seq)+'\n'+newseq+'\n')
+            # o.close()
             # remove two original sequences from 'lines' and replace with 'newseq'
             # print('length of lines', len(lines))
             lines.pop(i+1)
@@ -199,9 +194,11 @@ def sequenceAssembler(input, match, p_replace, p_indel, output):
             # print(lines)
             seq +=1
         else:
-            print(i, 'alignment score too low', lines[i], lines[i+1], v)
-            print(lines)
+            #print(i, 'alignment score too low', lines[i], lines[i+1], v)
+            #print(lines)
             i += 1
+    o.write('>Sequence'+str(seq)+'\n'+newseq+'\n')
+    o.close()
     print("alignments", lines)
     # m = [][]
     f.close()
