@@ -51,7 +51,7 @@ def computeMatrix(f1, f2, match, p_replace, p_indel):
             # else:
     #             print('element is', a[i][j].val, a[i][j].parent, i, j)
     # print('return\n')
-    print(b)
+    # print(b)
     # print(f1)
     # print(f2)
     return a,b
@@ -97,9 +97,9 @@ def getPath(v, ij, a, f1, f2):
             
 def convert(path, f1, f2):
     (f2, f1) = sorted((f1, f2))
-    print(f1)
-    print(f2)
-    print('path is', path, path[-1])
+    # print(f1)
+    # print(f2)
+    # print('path is', path, path[-1])
     # will keep track of where we are in path
     p = 0
     seq = ""
@@ -115,11 +115,11 @@ def convert(path, f1, f2):
         end = f1
         beg = f2
         stop=path[0][0]
-    print("new")
-    print(beg)
-    print(end)
-    print("Stop")
-    print(stop)
+    # print("new")
+    # print(beg)
+    # print(end)
+    # print("Stop")
+    # print(stop)
     # essentially finding where the dovetail is, what goes first, then goes to the other string after u reach stop
     if(stop<len(beg) and stop<len(end)):
         for i in range(0, stop): 
@@ -140,7 +140,7 @@ def convert(path, f1, f2):
             seq=end
         # print("LLLLLLLLLLLLLKLKLL")
         # print(ll)
-    print("Seq is "+ seq) 
+    # print("Seq is "+ seq) 
     """
     while j < (len(f2)) and p < len(path) and path[p][0] < len(f1):
         #print('i', i, len(f1),'j', j, len(f2),'p', p, len(path), path[p][0])
@@ -211,11 +211,11 @@ def sequenceAssembler(input, match, p_replace, p_indel, output):
     for i in lines:
         if len(i) > len(m):
             m = i
-    print(m)
+    # print(m)
     o.write('>Sequence'+str(0)+'\n'+m+'\n')
     o.close()
-    print("alignments", lines)
-    print("size", len(newseq))
+    # print("alignments", lines)
+    # print("size", len(newseq))
     # m = [][]
     f.close()
     # o.close()
