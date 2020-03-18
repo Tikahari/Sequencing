@@ -65,7 +65,7 @@ class SequenceGenerator{
             this.fasta += this.addWeightedNucleotide(random, s, this.fasta, true, 'Q');
         }
         // System.out.println("sequence is "+this.fasta);
-        return ">Sequence "+ this.seq +"\n"+this.fasta;
+        return ">Sequence"+ this.seq +"\n"+this.fasta;
     }
 
     public String generate_post(String args[]){
@@ -77,7 +77,7 @@ class SequenceGenerator{
         for(int j = 0; j < Integer.parseInt(args[5])-1; j++){
             //will keep track of sequence to write
             this.seq++;
-            sequence += "\n>Sequence "+this.seq+"\n";
+            sequence += "\n>Sequence"+this.seq+"\n";
             for(int i  = 0; i < this.fasta.length(); i++){
                 double random = Math.random();
                 if (random <= Double.parseDouble(args[6])){

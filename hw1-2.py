@@ -17,24 +17,24 @@ def sequencePartitioner(input, x, y, output):
             while i < len(line):
                 frag = frag +1
                 if seqn == 1 and i == 0:
-                    seq = ">Sequence "+ str(seqn) + '\t' + "Fragment " +str(frag)+'\n'
+                    seq = ">Sequence"+ str(seqn) + '|' + "fragment" +str(frag)+'\n'
                 else:
-                    seq = "\n>Sequence "+ str(seqn) + '\t' + "Fragment " +str(frag)+'\n'
+                    seq = "\n>Sequence"+ str(seqn) + '|' + "fragment" +str(frag)+'\n'
                 # get random number between x and y
                 rn = random.randint(int(x), int(y))
                 # if the entire sequence of that length exists add it to the output file
-                if i + rn < len(line):
+                if i + rn < len(line.strip()):
                     seq += line[i:i+rn].strip()
                     o.write(seq)
                 # if not, check if a fragment of size greater than 'x' exists
-                elif len(line) - i - rn >= int(x):
+                elif len(line.strip()) - i -1 >= int(x):
                     seq += line[i:len(line)-1].strip()
                     o.write(seq)
                     # print("ONLY X",len(line), i, len(line)-i, x, seq, len(line[i:len(line)-1]))
                 # else, through away fragment
                 else:
                     seq += line[i:len(line)-1].strip()
-                    print("OUT OF RANGE",len(line), i, len(line)-i, x, seq, "\nMaximum possible size:",len(line[i:len(line)-1]),"Minimum required size:", x, "\n")
+                    # print("OUT OF RANGE\nlength of line:",len(line.strip()), "\nindex:",i, "\nrandom number generated:", rn, "\ncharacters left in line:", len(line.strip())-i-1, seq, "\nMaximum possible size:",len(line[i:len(line.strip())-1].strip()),"Minimum required size:", x, "\n")
                 # start next fragment at end of read fragment
                 i=i+rn
         line = f.readline().strip()

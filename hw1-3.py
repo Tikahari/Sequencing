@@ -7,7 +7,7 @@ class Node:
         self.parent = list()
         self.parent.append(parent)
 
-def max(list):
+def max_1(list):
     # print('list is', list)
     m = -999
     indices = []
@@ -39,7 +39,7 @@ def computeMatrix(f1, f2, match, p_replace, p_indel):
                     # print('replace', i, j, f1[i-1], f2[j-1])
                     cond = p_replace
                     # print(a[i][j-1].val+p_indel, a[i-1][j].val+p_indel, a[i-1][j-1].val+cond)
-                val, parent = max((a[i][j-1].val+p_indel, a[i-1][j].val+p_indel, a[i-1][j-1].val+cond))
+                val, parent = max_1((a[i][j-1].val+p_indel, a[i-1][j].val+p_indel, a[i-1][j-1].val+cond))
                 # print('element is', val, f1[i-1], f2[j-1], i, j)
                 # print('parent is ', parent)
                 #if(val >= 0):
@@ -51,7 +51,7 @@ def computeMatrix(f1, f2, match, p_replace, p_indel):
             # else:
     #             print('element is', a[i][j].val, a[i][j].parent, i, j)
     # print('return\n')
-    print(b)
+    # print(b)
     # print(f1)
     # print(f2)
     return a,b
@@ -97,11 +97,11 @@ def getPath(v, ij, a, f1, f2):
             
 def convert(path, f1, f2):
     (f2, f1) = sorted((f1, f2))
-    print(f1)
-    print(f2)
-    print('path is', path, path[-1])
+    # print(f1)
+    # print(f2)
+    # print('path is', path, path[-1])
     # will keep track of where we are in path
-    #p = 0
+    p = 0
     seq = ""
     #series = False
     i = 0
@@ -115,25 +115,32 @@ def convert(path, f1, f2):
         end = f1
         beg = f2
         stop=path[0][0]
-    print("new")
-    print(beg)
-    print(end)
-    print("Stop")
-    print(stop)
+    # print("new")
+    # print(beg)
+    # print(end)
+    # print("Stop")
+    # print(stop)
     # essentially finding where the dovetail is, what goes first, then goes to the other string after u reach stop
-
-    for i in range(0, stop): 
-        if(i>stop):
+    if(stop<len(beg) and stop<len(end)):
+        for i in range(0, stop): 
+            #if(i<stop):
             seq+=beg[i]
-        # print(beg[i])
+            # print(beg[i])
     # print("test in here")
     # print(beg[stop])
     # print("end")
-    for j in range(0, len(end)):
-        seq+=end[j]
-        # print(end[j])
-    print("Seq is "+ seq) 
-    
+        for j in range(0, len(end)):
+            seq+=end[j]
+            # print(end[j])
+    if(seq==""):
+        # find longer string
+        if(len(beg)>len(end)):
+            seq=beg
+        else:
+            seq=end
+        # print("LLLLLLLLLLLLLKLKLL")
+        # print(ll)
+    # print("Seq is "+ seq) 
     """
     while j < (len(f2)) and p < len(path) and path[p][0] < len(f1):
         #print('i', i, len(f1),'j', j, len(f2),'p', p, len(path), path[p][0])
@@ -148,10 +155,12 @@ def convert(path, f1, f2):
             p +=1
     #print('after', path[p-1][0], f1)
     i = path[p-1][0]
+    
     while i < len(f1):
         seq += f1[i]
         #print('after', seq)
-        i += 1 """
+        i += 1 
+    """
     return seq
 
 def sequenceAssembler(input, match, p_replace, p_indel, output):
@@ -197,9 +206,16 @@ def sequenceAssembler(input, match, p_replace, p_indel, output):
             #print(i, 'alignment score too low', lines[i], lines[i+1], v)
             #print(lines)
             i += 1
-    o.write('>Sequence'+str(seq)+'\n'+newseq+'\n')
+    # get max sequence
+    m = ""
+    for i in lines:
+        if len(i) > len(m):
+            m = i
+    # print(m)
+    o.write('>Sequence'+str(0)+'\n'+m+'\n')
     o.close()
-    print("alignments", lines)
+    # print("alignments", lines)
+    # print("size", len(newseq))
     # m = [][]
     f.close()
     # o.close()
