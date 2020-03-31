@@ -6,7 +6,7 @@
 
 ## Sequence Generator<br/>
 #### Usage
-    java hw1-1.java <sequence length> <relative proportion A> <relative proportion C> <relative proportion G> <relative proportion T> <number of sequences> <mutation probability> <path to outputfile>
+    java SequenceGenerator <sequence length> <relative proportion A> <relative proportion C> <relative proportion G> <relative proportion T> <number of sequences> <mutation probability> <path to outputfile>
 #### Overview
 This program first generates a sequence of a set length with relative proportions of the nucleotides A/C/G/T. Then the sequence is mutated according to a mutation probability a set number of times. 
 <br/>
