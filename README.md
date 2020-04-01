@@ -5,8 +5,6 @@
 * openjdk version "11.0.6" 2020-01-14
 
 ## Sequence Generator<br/>
-#### Compile
-    javac hw1-1.java 
 #### Usage
     java SequenceGenerator <sequence length> <relative proportion A> <relative proportion C> <relative proportion G> <relative proportion T> <number of sequences> <mutation probability> <path to outputfile>
 #### Overview
